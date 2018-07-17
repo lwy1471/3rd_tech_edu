@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous">
+    </script>
+    <script src="https://chatbot.aibril.com/static/sdk/public/js/achat_render.js"></script>
+    <script src="./achat_sdk.js"></script>
+    <script src="https://chatbot.aibril.com/static/sdk/public/js/loading.js"></script>
+    <script src="https://chatbot.aibril.com/static/sdk/public/js/jquery.tmpl.js"></script>
+    <script src="https://chatbot.aibril.com/static/sdk/public/js/jquery.tmplPlus.js"></script>
+    <script src="https://chatbot.aibril.com/static/sdk/public/js/jquery.bxslider.js"></script>
+    <script src="https://chatbot.aibril.com/static/sdk/public/js/jquery.sliderPro.min.js"></script>
+
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=vKGcl_rdS_5uXlRSlI9F&submodules=geocoder"></script>
+
+    <script id="achat_input_text" type="text/j-query-tmpl">
+    <p class='user'><span> ${result} </span></p>
+    </script>
+    <script id="achat_output_text" type="text/j-query-tmpl">
+    {{each(i, item) img}}
+        <p class='aibril'><img src='${item}' width='80%'></p>
+    {{/each}}
+
+    {{each(i, item) result}}
+        <p class='aibril'><span class='box'><span> {{html item}} </span></span></p>
+    {{/each}}
+    </script>
+    <script id="achat_output_url" type="text/j-query-tmpl">
+    <div class='aibril'>
+
+        <div class='listBox' style='width:70%;'>
+            <p class='ask'>
+                {{each(i, item) img}}
+                    <img src='${item}' width='100%'>
+                {{/each}}
+
+                {{each(i, item) result}}
+                    <span>${item}</span>
+                {{/each}}
+            </p>
+            <ul class='selection'>
+                {{each(i, item) content}}
+                    <li><a href='${item.url}' target='_blank'>${item.title}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    </script>
+    <script id="achat_output_list" type="text/j-query-tmpl">
+    <div class='aibril'>
+        <div class='listBox' style='width:70%;'>
+            <p class='ask'>
+                {{each(i, item) img}}
+                    <img src='${item}' width='100%'>
+                {{/each}}
+
+                {{each(i, item) result}}
+                    <span>${item}</span>
+                {{/each}}
+            </p>
+            <ul class='selection2'>
+                {{each(i, item) content}}
+                    <li><a name='lists' href='#none' response='${item.response}'><em>${item.title}</em></a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    </script>
+    <script id="achat_output_button" type="text/j-query-tmpl">
+    <div class='tagWrap' style='width:100%; text-align:center;'>
+        <div class='tagControl'>
+            <a class='bx-next'>Next</a>
+            <a class='bx-prev'>Prev</a>
+        </div>
+        <div class='taglist' style='display:inline-block;'>
+            <div>
+            {{each(i,item) content}}
+                <div class='tagBox'>
+                    <a name='tagbox' href='#none' response='${item.response}'><em>${item.title}</em></a>
+                </div>
+            {{/each}}
+            </div>
+        </div>
+    </div>
+    </script>
+    <script id="achat_output_img_slider" type="text/j-query-tmpl">
+    <div class='aibril'>
+        <div class='listBox' style='width:100%;'>
+           <div class="slider-pro" id="my-slider">
+              <div class="sp-slides">
+                 {{each(i,item) content}}
+                        <div class="sp-slide">
+                           <img class="sp-image" src="${item.img_url}" width="100%" height="100%"/>
+                           <h3 class="sp-layer">${item.img_title}</h3>
+                        </div>
+                 {{/each}}
+              </div>
+           </div>
+        </div>
+    </div>
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var user_info = {
+                   username : "hong",
+                   language : "korean",
+                   category : "refund"
+                  }
+            $('#chatbotwrapper').OEngine({
+                firstMsg  :  "안녕하세요. Aibril Chatbot 입니다.",
+                api_key : "734006bf-d58b-47e4-a6f8-122e1ed6294f",
+                user_info : user_info
+            });
+         });
+    </script>
+    <link rel="stylesheet" href="https://chatbot.aibril.com/static/sdk/public/css/index.css">
+    <link rel="stylesheet" id="green_css" href="https://chatbot.aibril.com/static/sdk/public/css/style__green.css">
+    <link rel="stylesheet" id="grey_css" href="https://chatbot.aibril.com/static/sdk/public/css/style__grey.css">
+    <link rel="stylesheet" id="red_css" href="https://chatbot.aibril.com/static/sdk/public/css/style__red.css">
+
+<script>
+
+    function red(){
+        document.getElementById('red_css').disabled = false;
+        document.getElementById('green_css').disabled = true;
+        document.getElementById('grey_css').disabled = true;
+    }
+
+    function teal(){
+        document.getElementById('green_css').disabled = false;
+        document.getElementById('red_css').disabled = true;
+        document.getElementById('grey_css').disabled = true;
+    }
+
+    function grey(){
+        document.getElementById('grey_css').disabled = false;
+        document.getElementById('red_css').disabled = true;
+        document.getElementById('green_css').disabled = true;
+    }
+
+</script>
+
+</head>
+
+<body>
+
+<div class="row no-border">
+    <div class="sixteen wide tablet eight wide computer column" style="text-align:center">
+                <br>
+                <button class="ui red button" onclick="javascript:red()">Red</button>
+                <button class="ui teal button" onclick="javascript:teal()">Teal</button>
+                <button class="ui grey button" onclick="javascript:grey()">Grey</button>
+    </div>
+</div>
+
+    <div id="chatbotwrapper" class="chatbotwrap" style="height: 90%; position:absolute; left:50%; transform:translateX(-50%);">
+        <div id="sidebar-wrapper" class="chatbotInner" style="box-shadow: 10px 10px 20px grey;">
+            <div class="titArea" id="style-2">
+                <p class="title"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/archive/2/24/20170813004855%21Samsung_Logo.svg/120px-Samsung_Logo.svg.png" height=15></p>
+            </div>
+            <div class="converArea" id="style-3">
+                <div id="achat_talk_body" class="converScr">
+                    <div id="wsdk_date" style="text-align: center;margin-bottom: 16px;">
+                        <span id="achat_date">Today , 2018-03-05</span>
+                    </div>
+<!--                    <p class="aibril"> -->
+<!--                        <span class="box"> -->
+<!--                            <span></span> -->
+<!--                        </span> -->
+<!--                    </p> -->
+                </div>
+            </div>
+            <div class="converArea2" id="style-3">
+               <div id="achat_button" class='tagArea'>
+               </div>
+            </div>
+
+            <div id="question_wrap">
+                <div class="userInputArea">
+                    <input type="text" placeholder="질문을 입력하세요" id="achat_input_message">
+                    <a href="#none" class="enter" id="achat_send_message"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
