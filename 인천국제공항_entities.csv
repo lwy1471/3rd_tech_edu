@@ -1,0 +1,35 @@
+aircode,대한항공,/KE\d+/,/ke\d+/
+aircode,아시아나항공,/OZ\d+/,/oz\d+/
+aircode,베트남항공,/VN\d+/,/vn\d+/
+aircode,상하이항공,/FM\d+/,/fm\d+/
+aircode,아메리칸항공,/AA\d+/,/aa\d+/
+aircode,델타항공,/DL\d{4}/,/dl\d+/
+aircode,몽골항공,/M0\d/,/m0\d/
+aircode,에미레이트항공,/EK\d+/,/ek\d+/
+aircode,에어서울,/RS\d+/,/rs\d+/
+aircode,에어프랑스,/AF\d+/,/af\d+/
+aircode,이스타항공,/ZE\d+/,/ze\d+/
+aircode,일본항공,/JL\d+/,/jl\d+/
+aircode,제주항공,/7C\d+/,/7c\d+/
+aircode,홍콩항공,/UO\d+/,/uo\d+/
+airline,델타항공,델타,델타 항공
+airline,이스타항공,이스타,이스타 항공
+airline,베트남항공,베트남 항공
+airline,몽골항공,몽골 항공
+airline,비엣젯항공,비엣젯,비엣젯 항공
+airline,상하이항공,상하이 항공
+airline,아메리칸항공,아메리칸 항공,아메리칸
+airline,아시아나항공,아시아나
+airline,에어프랑스,에어 프랑스
+airline,에미레이트 항공,에미레이트
+airline,대한항공,대한,대한 항공
+airline,영국항공,영국 항공
+airline,에어서울,에어 서울
+airline,일본항공,일본 항공
+airline,제주항공,제주 항공
+airline,홍콩항공,홍콩 항공
+prohibited_items,무기,칼,도검,커터 칼,커터,나이프,도끼
+prohibited_items,공구,망치,톱,낫,드릴,맥가이버,렌치,스패너
+prohibited_items,액체류,물,음료수,음료,김치,고추장,된장,스킨,로션,크림,치약,젤,샴푸,스프레이
+YesOrNo,yes,응,있어,그래,그래요,네,맞아요,부탁해요,ㅇㅇ,ㅇ
+YesOrNo,no,아니,아니요,됐어,됐어요,그만,아닙니다,싫어,없어,ㄴㄴ,ㄴ
