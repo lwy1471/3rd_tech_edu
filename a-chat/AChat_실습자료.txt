@@ -1,0 +1,174 @@
+﻿
+1. WebSDK 파일 변경
+#################################################################################################################
+
+SK_AibrilChatbot_WebSDK_v2_3.html 변경 전
+
+#################################################################################################################
+
+[라인 14]
+    <script src="https://chatbot.aibril.com/static/sdk/public/js/achat_sdk.js"></script>
+
+[라인 43]
+                    <span>${item}</span>
+
+[라인 99]
+                           <h3 class="sp-layer">${item.img_title}</h3>
+
+[라인 117]
+                api_key : "f6cbcbbd-34d6-42ed-acde-df529d2ebd65", 
+
+
+#################################################################################################################
+
+SK_AibrilChatbot_WebSDK_v2_3.html 변경 후
+
+#################################################################################################################
+
+[라인 14~15]
+    <!--<script src="https://chatbot.aibril.com/static/sdk/public/js/achat_sdk.js"></script>-->
+    <script src="./achat_sdk.js"></script>
+
+[라인 44]
+                    <span>{{html item}}</span>
+
+[라인 100]
+                           <h3 class="sp-layer">{{html item.img_title}}</h3>
+
+[라인 118]
+                api_key : "cea19f06-111b-42c7-ab3f-c6de7b8878aa",
+
+
+
+2. achat_sdk.js 파일 변경
+#################################################################################################################
+
+https://chatbot.aibril.com/static/sdk/public/js/achat_sdk.js 변경 전
+
+#################################################################################################################
+
+[라인 133~136]
+							result.anythingMsg = achat.options.anythingMsg;
+							$(achat.target).find('#achat_talk_body').achat_render(result);
+							delete result.context.achat_ui;
+							achat.variable.conText = result.context;
+
+
+#################################################################################################################
+
+./achat_sdk.js 변경 후
+
+#################################################################################################################
+
+[라인 133~213]
+							console.log(result);
+
+							if(result.output.type=="Link"){
+								var resultJson = JSON.parse(result.output.text);
+								var itemsJson = resultJson.response.body;
+								var linkValue = result.context.linkValue;
+
+								var achatObject = new Object();
+								var achatArray = new Array();
+								var textObject = new Object();
+
+								if(linkValue=="184" || linkValue=="157") {
+									var itemLength = itemsJson.items.item.length;
+
+									for(var key=0; key < itemLength; key++) {
+										var listObject = new Object();
+
+										listObject.title = itemsJson.items.item[key].name;
+										listObject.response = itemsJson.items.item[key].name;
+
+										achatArray.push(listObject);
+									};
+									achatObject.ui_type = 'list';
+
+									if(linkValue=="184"){
+										textObject.values = '관광 지역을 선택해 주세요.';
+									} else if(linkValue=="157"){
+										textObject.values = '관광 타입을 선택해 주세요.';
+									};
+								} else if(linkValue=="183"){
+									var itemLength = itemsJson.items.item.length;
+
+									for(var key=0; key < itemLength; key++) {
+										var listObject = new Object();
+
+										listObject.img_url = itemsJson.items.item[key].firstimage;
+										listObject.img_title = itemsJson.items.item[key].title;
+
+										achatArray.push(listObject);
+									};
+									achatObject.ui_type = 'img_slider';
+								} else if(linkValue=="187"){
+									var itemLength = itemsJson.items.item.length;
+
+									for(var key=0; key < itemLength; key++) {
+										var listObject = new Object();
+
+										listObject.title = itemsJson.items.item[key].countryName;
+										listObject.response = itemsJson.items.item[key].countryName;
+
+										achatArray.push(listObject);
+									};
+									achatObject.ui_type = 'list';
+									textObject.values = '국가를 선택해 주세요.';
+								} else if(linkValue=="188"){
+									var listObject = new Object();
+
+									listObject.url = 'https://www.0404.go.kr/walking/prohibition_system.jsp';
+									listObject.title = '외교부 해외안전여행 사이트';
+
+									achatArray.push(listObject);
+
+									achatObject.ui_type = 'url';
+									achatObject.img = new Array(itemsJson.item.imgUrl);
+									textObject.values = '# 국가명 : ' + itemsJson.item.countryName + '<br># 금지기간 : ' + itemsJson.item.banNote;
+								};
+								achatObject.content = achatArray;
+
+								result.context.achat_ui = achatObject;
+								result.output.text = textObject;
+							};
+
+							result.anythingMsg = achat.options.anythingMsg;
+							$(achat.target).find('#achat_talk_body').achat_render(result);
+							delete result.context.achat_ui;
+
+							if(result.output.type=="Link"){
+								delete result.context.linkValue;
+							};
+
+							achat.variable.conText = result.context;
+
+
+
+3. 외부 연동 API 정보 변경
+#################################################################################################################
+
+A-Chat 연계설정에 신규 등록 후 Assistant Dialog Context에 linkValue, returnValue 값 수정 필요
+
+#################################################################################################################
+
+[여행금지국가 목록 조회 - 코드번호 187] 3.3 여행금지국가 조회((Open API) A-Chat UI 적용(list)
+http://apis.data.go.kr/1262000/TravelBanService/getTravelBanList?serviceKey=#param1&startPage=#param2&_type=#param3
+
+[여행금지국가 정보 - 코드번호 188] 여행금지국가 조회((Open API) A-Chat UI 적용(img, url)
+http://apis.data.go.kr/1262000/TravelBanService/getTravelBanInfo?serviceKey=#param1&id=#param2&_type=#param3
+
+[지역별 관광정보 지역코드 조회 - 코드번호 184] 4.3 지역별 관광안내(Open API) A-Chat UI 적용(list)
+http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=#param1&MobileOS=#param2&MobileApp=#param3&numOfRows=#param4&_type=#param5
+
+[지역별 관광정보 관광타입 조회 - 코드번호 157] 지역별 관광안내(Open API) A-Chat UI 적용(list)
+http://api.visitkorea.or.kr/openapi/service/rest/KorService/categoryCode?ServiceKey=#param1&MobileOS=#param2&MobileApp=#param3&_type=#param4
+
+[지역별 관광정보 조회 - 코드번호 183] 지역별 관광안내(Open API) A-Chat UI 적용(img_slider)
+http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=#param1&MobileOS=#param2&MobileApp=#param3&cat1=#param4&areaCode=#param5&_type=#param6
+
+
+
+
+
+
